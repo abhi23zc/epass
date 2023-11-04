@@ -5,6 +5,7 @@ const db = require('./db/config')
 const PORT = process.env.PORT || 80
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
+
 db();
 
 const corsOptions = {
@@ -19,6 +20,9 @@ app.use(bodyParser.json())
 
 app.use('/auth', require('./routes/Auth'))
 app.use('/', require('./routes/Pass'))
+app.use('/test', (req, res)=>{
+    res.send("API is working")
+})
 app.listen(PORT, ()=>{
     console.log("Server Started on port" + PORT)
 })

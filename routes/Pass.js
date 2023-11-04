@@ -10,12 +10,23 @@ router.post('/', isAuthenticated,async(req, res)=>{
         console.log(password, domain)
         let credentials= new cred({password:password, domain:domain, user:req.user.id});
         await credentials.save();
-        res.send("Credentials saved succesfully");
+        res.json({"message":"Credentials saved succesfully"});
     }catch(e){
         console.log(e)
     }
 
 
+})
+
+router.put("/", isAuthenticated , async(req, res)=>{
+    try{
+        // console.log(req.body.uid)
+
+        await cred.deleteOne({_id:req.body.uid})
+        return res.json({"message":"Document Deleted"})
+    }catch(e){
+        return res.json({"error":"Error while deleting"})
+    }
 })
 
 router.get('/', isAuthenticated , async(req, res) =>{

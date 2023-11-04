@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken')
 const isAuthenticated = require('../middleware/Authenticated')
 
 const secretKey = 'zrfisbest';
+
+// Get Post Put 
 router.get('/', isAuthenticated, (req, res)=>{
     res.send("Welcome to Home")
 })
@@ -25,10 +27,10 @@ router.post('/login', async(req, res) => {
 
         res.cookie('token', token, {
             maxAge: 900000, 
-            httpOnly: true,
+            httpOnly: false,
           });
 
-        res.send({"Auth Token: ": token});
+        res.send({"token": token});
 
         console.log("Auth Succesfull");
     }
@@ -47,7 +49,7 @@ router.post('/register', async (req, res) => {
 
     let user = await User.findOne({ email: email });
     if (user) {
-        res.send("Already registered !")
+        res.send({"msg" :"Already registered !"})
         console.log("Already registered !")
     }
     else {
@@ -60,10 +62,10 @@ router.post('/register', async (req, res) => {
             })
 
             await n_user.save();
-            res.send("Succesfully registered")
+            res.send({"msg":"Succesfully registered"})
         } catch (e) {
             console.log(e);
-            res.send("Something error occured");
+            res.send({"msg" :"Something error occured"});
         }
     }
 

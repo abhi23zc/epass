@@ -2,10 +2,13 @@ const jwt = require('jsonwebtoken')
 
 const secretKey = 'zrfisbest';
 function isAuthenticated(req, res, next){
-    const token = req.cookies.token;
+  
+    const {token} = req.headers;
+    console.log(token)
     jwt.verify(token, secretKey, (err, decoded) => {
         if (err) {
-          return res.status(401).json({ message: 'Invalid token' });
+          
+          return res.json({ message: 'error'});
         }
         req.user = decoded;
         next();
